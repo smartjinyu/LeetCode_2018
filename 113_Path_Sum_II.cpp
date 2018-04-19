@@ -8,25 +8,26 @@ struct TreeNode {
     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
 };
 
-void sumRec(TreeNode* node, int sum, int curSum, vector<int> cur,vector<vector<int>>& res){
-    if(node == NULL) return;
-    curSum += node->val;
-    cur.push_back(node->val);
-    if(node->left == NULL && node->right == NULL){
-        if(curSum == sum) res.push_back(cur);
+void sumRec(TreeNode* root, int sum, int curSum, vector<int>& res, vector<vector<int>>& ans){
+    if(root == NULL) sreturn;
+    curSum += root->val;
+    res.push_back(root->val);
+    if(root->left == NULL && root->right == NULL){
+        if(curSum == sum) ans.push_back(res);
     }else{
-        sumRec(node->left,sum,curSum,cur,res);
-        sumRec(node->right,sum,curSum,cur,res);
+        sumRec(root->left,sum,curSum,res,ans);
+        sumRec(root->right,sum,curSum,res,ans);
     }
-}
-
-vector<vector<int>> pathSum(TreeNode* root, int sum) {
-    vector<vector<int>> res;
-    if(root == NULL) return res;
-    vector<int> cur;
-    sumRec(root,sum,0,cur,res);
-    return res;
+    res.pop_back();
+    curSum -= root->val;
     
+}
+vector<vector<int>> pathSum(TreeNode* root, int sum) {
+    vector<vector<int>> ans;
+    if(root == NULL) return ans;
+    vector<int> res;
+    sumRec(root,sum,0,res,ans);
+    return ans;
 }
 int main(){
     return 0;
