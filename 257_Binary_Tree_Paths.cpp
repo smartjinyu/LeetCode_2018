@@ -26,14 +26,17 @@ void getPath(TreeNode* node, vector<int>& cur, vector<string>& ans){
     }else if(node->left == NULL){
         cur.push_back(node->val);
         getPath(node->right,cur,ans);
+        cur.pop_back();
     }else if(node->right == NULL){
         cur.push_back(node->val);
         getPath(node->left,cur,ans);
+        cur.pop_back();
     }else{
         cur.push_back(node->val);
-        vector<int> cur1 = cur;
         getPath(node->left,cur,ans);
-        getPath(node->right,cur1,ans);
+        cur.pop_back();
+        getPath(node->right,cur,ans);
+        cur.pop_back();
     }
 }
 vector<string> binaryTreePaths(TreeNode* root) {
