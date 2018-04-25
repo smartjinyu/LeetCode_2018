@@ -44,6 +44,25 @@ int largestRectangleArea(vector<int>& heights) {
     if(heights.size() == 1) return heights[0];
     return divideAndConquer(heights, 0, heights.size() - 1);
 }
+
+int largestRectangleArea2(vector<int>& heights) {
+        if(heights.size() == 0) return 0;
+        if(heights.size() == 1) return heights[0];
+        stack<int> sk;
+        int l, h;
+        int maxArea = 0;
+        heights.push_back(0); // for last computation
+        for(int i = 0; i < heights.size(); i++){
+            while(!sk.empty() && heights[sk.top()] >= heights[i]){
+                h = heights[sk.top()]; sk.pop();
+                l = sk.empty() ? -1 : sk.top();
+                maxArea = max(maxArea, h * (i - l - 1));
+            }
+            sk.push(i);
+        }
+        return maxArea;
+    }
+
  int main(){
      return 0;
  }
